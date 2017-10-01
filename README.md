@@ -6,7 +6,7 @@
 
 - First, go to [Google Sheets](https://docs.google.com/spreadsheets) and `Start a new spreadsheet` with the `Blank` template.
 - Rename it `Email Subscribers`. Or whatever, it doesn't matter.
-- Put the following titles into the first row of the first column:
+- Put the following headers into the first row:
 
 |   |     A     |   B   | C | ... |
 |---|:---------:|:-----:|:-:|:---:|
@@ -125,13 +125,13 @@ As you can see, this script uses the the [Fetch API](https://developer.mozilla.o
 
 Because Fetch is new, we'll need to first include a couple of polyfills to make sure it works on older browsers. The first is the [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill) and and the second is [GitHub's fetch polyfill](https://github.com/github/fetch). 
 
-> **Fun fact!** The `<html>`, `<head>`, and `body` tags are actually optional, but since the [rules around how the browser parses a page are kinda complicated](https://stackoverflow.com/questions/5641997/is-it-necessary-to-write-head-body-and-html-tags/15094615#15094615), you'd probably not want to omit them on real websites.
+> **Fun fact!** The `<html>`, `<head>`, and `body` tags are actually among a handful of optional tags, but since the [rules around how the browser parses a page are kinda complicated](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#optional-tags), you'd probably not want to omit them on real websites.
 
 ## 7. Adding additional form data
-To capture additional data, you'll just need to create new columns with titles matching the `name` values from you form inputs. For example, if you want to add `First Name` and `Last Name` inputs, you'd give them `name` values like so:
+To capture additional data, you'll just need to create new columns with titles matching exactly the `name` values from your form inputs. For example, if you want to add first and last name inputs, you'd give them `name` values like so:
 
 ```html
-<form class="js-form">
+<form name="submit-to-google-sheet">
   <input name="email" type="email" placeholder="Email" required>
   <input name="firstName" type="text" placeholder="First Name">
   <input name="lastName" type="text" placeholder="Last Name">
@@ -139,7 +139,7 @@ To capture additional data, you'll just need to create new columns with titles m
 </form>
 ```
 
-And then add them to your sheet like so:
+Then create new headers with the exact, case-sensitive `name` values:
 
 |   |     A     |   B   |     C     |     D    | ... |
 |---|:---------:|:-----:|:---------:|:--------:|:---:|
@@ -154,3 +154,11 @@ Please [create a new issue](https://github.com/jamiewilson/form-to-google-sheet/
 - [Google Sheet Form Post](https://gist.github.com/willpatera/ee41ae374d3c9839c2d6)
 - [How to Submit an HTML Form to Google Sheets…without Google Forms](https://medium.com/@dmccoy/how-to-submit-an-html-form-to-google-sheets-without-google-forms-b833952cc175)
 - [Send Email from a Static HTML Form using Google Apps Mail!](https://github.com/dwyl/html-form-send-email-via-google-script-without-server)
+
+#### Documentation
+- [Google Apps Script](https://developers.google.com/apps-script/)
+- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+- [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill)
+- [Fetch Polyfill](https://github.com/github/fetch)
+- [HTML `<form>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form)
+- [Document.forms](https://developer.mozilla.org/en-US/docs/Web/API/Document/forms)

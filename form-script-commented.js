@@ -60,29 +60,22 @@ function doPost (e) {
     var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
     // Gets the last row and then adds one
     var nextRow = sheet.getLastRow() + 1
-    // Initializes an empty array to store our new row data in
-    var row = []
 
     /*
-    Loops through all values of 'headers' and if it matches 'timestamp'
-    then it creates a new Date() object for that row, otherwise it moves on to
-    pushing the key/value pairs from the URL parameters to the row array
+    Maps the headers array to a new array. If a header's value is 'timestamp' then it
+    returns a new Date() object, otherwise it returns the value of the matching URL parameter
     https://developers.google.com/apps-script/guides/web
     */
-    for (i in headers) {
-      if (headers[i] == 'timestamp') {
-        row.push(new Date())
-      } else {
-        row.push(e.parameter[headers[i]])
-      }
-    }
+    var newRow = headers.map(function(header) {
+      return header === 'timestamp' ? new Date() : e.parameter[header]
+    })
 
     /*
-    Gets a range from the next row to the end row based on how many items are in row
-    then sets the values of the whole array at once.
+    Gets a range from the next row to the end row based on how many items are in newRow
+    then sets the new values of the whole array at once.
     https://developers.google.com/apps-script/reference/spreadsheet/range#setValues(Object)
     */
-    sheet.getRange(nextRow, 1, 1, row.length).setValues([row])
+    sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
 
     /*
     Return success results as JSON
