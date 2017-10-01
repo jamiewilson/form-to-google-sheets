@@ -8,8 +8,8 @@ https://developers.google.com/apps-script/reference/properties/properties-servic
 var scriptProp = PropertiesService.getScriptProperties()
 
 /*
-This is the initial setup function. It gets the SpreadsheetApp ID and adds it to our PropertiesService.
-
+This is the initial setup function. It gets the active SpreadsheetApp ID and adds it to our PropertiesService.
+https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app#getactivespreadsheet
 */
 function setup () {
   var doc = SpreadsheetApp.getActiveSpreadsheet()

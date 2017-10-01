@@ -66,7 +66,7 @@ function doPost (e) {
 }
 ```
 
-> If you want to better understand what this script is doing, checkout the `form-script-commented.js` file in the repo for a detailed explanation. 
+> If you want to better understand what this script is doing, checkout the [`form-script-commented.js`](https://github.com/jamiewilson/form-to-google-sheets/blob/master/form-script-commented.js) file in the repo for a detailed explanation. 
 
 ## 3. Run the setup function
 
