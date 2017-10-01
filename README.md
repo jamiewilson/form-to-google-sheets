@@ -40,15 +40,13 @@ function doPost (e) {
 
     var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
     var nextRow = sheet.getLastRow() + 1
-    var row = []
-    for (i in headers) {
-      if (headers[i] == 'timestamp') {
-        row.push(new Date())
-      } else {
-        row.push(e.parameter[headers[i]])
-      }
-    }
-    sheet.getRange(nextRow, 1, 1, row.length).setValues([row])
+
+    var newRow = headers.map(function(header) {
+      return header === 'timestamp' ? new Date() : e.parameter[header]
+    })
+
+    sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
+
     return ContentService
       .createTextOutput(JSON.stringify({ 'result': 'success', 'row': nextRow }))
       .setMimeType(ContentService.MimeType.JSON)
