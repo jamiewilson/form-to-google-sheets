@@ -1,6 +1,8 @@
 # Submit a Form to Google Sheets
 
-#### How to create an HTML form that stores the submitted form data in Google Sheets. Using plain 'ol JavaScript, [Google Apps Script](https://developers.google.com/apps-script/), the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), along with the [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill) and GitHub's [Fetch Polyfill](https://github.com/github/fetch).
+#### How to create an HTML form that stores the submitted form data in Google Sheets. Using plain 'ol JavaScript, [Google Apps Script](https://developers.google.com/apps-script/), the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), along with the [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill) and GitHub's [Fetch Polyfill](https://github.com/github/fetch). 
+
+Demo at https://form-to-google-sheets.surge.sh
 
 ## 1. Create a new Google Sheet
 
