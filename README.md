@@ -31,8 +31,8 @@ function intialSetup () {
 }
 
 function doPost (e) {
-   var lock = LockService.getScriptLock()
-   lock.tryLock(10000)
+  var lock = LockService.getScriptLock()
+  lock.tryLock(10000)
 
   try {
     var doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
