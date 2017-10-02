@@ -1,6 +1,6 @@
 # Submit a Form to Google Sheets
 
-#### How to create an HTML form that stores the submitted form data in Google Sheets. Using plain 'ol JavaScript, [Google Apps Script](https://developers.google.com/apps-script/), the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), along with the [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill) and GitHub's [Fetch Polyfill](https://github.com/github/fetch). 
+#### How to create an HTML form that stores the submitted form data in Google Sheets using plain 'ol JavaScript (ES6), [Google Apps Script](https://developers.google.com/apps-script/), [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
 Demo at https://form-to-google-sheets.surge.sh
 
@@ -105,9 +105,6 @@ Open the file named `index.html`. On line 12 replace `<SCRIPT URL>` with your sc
   <button type="submit">Send</button>
 </form>
 
-<script src="https://unpkg.com/promise-polyfill/promise.min.js"></script>
-<script src="https://unpkg.com/whatwg-fetch/fetch.js"></script>
-
 <script>
   const scriptURL = '<SCRIPT URL>'
   const form = document.forms['submit-to-google-sheet']
@@ -121,9 +118,9 @@ Open the file named `index.html`. On line 12 replace `<SCRIPT URL>` with your sc
 </script>
 ```
 
-As you can see, this script uses the the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), a fairly new promise-based mechanism for making web requests. It makes a "POST" request to your script URL and passes our form data as URL paramters.
+As you can see, this script uses the the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), a fairly new promise-based mechanism for making web requests. It makes a "POST" request to your script URL and uses [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) to pass in our data as URL paramters.
 
-Because Fetch is new, we'll need to first include a couple of polyfills to make sure it works on older browsers. The first is the [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill) and and the second is [GitHub's fetch polyfill](https://github.com/github/fetch). 
+Because Fetch and FormData aren't fully supported, you'll likely want to include their respective polyfills. [See section #8](#8-related-polyfills). 
 
 > **Fun fact!** The `<html>`, `<head>`, and `body` tags are actually among a handful of optional tags, but since the [rules around how the browser parses a page are kinda complicated](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#optional-tags), you'd probably not want to omit them on real websites.
 
@@ -145,6 +142,29 @@ Then create new headers with the exact, case-sensitive `name` values:
 |---|:---------:|:-----:|:---------:|:--------:|:---:|
 | 1 | timestamp | email | firstName | lastName |     |
 
+## 8. Related Polyfills
+Some of this stuff is not yet fully supported by browsers or doesn't work on older ones. Here are some polyfill options to use for better support.
+
+- [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill)
+- [Fetch Polyfill](https://github.com/github/fetch)
+- [FormData Polyfill](https://github.com/jimmywarting/FormData)
+
+Since the FormData polyfill is published as a Node package and not in a way in which browsers can work, a good option for including these is using [Browserify's CDN called wzrd.in](https://wzrd.in/). This service compiles, minifies and serves it for us.
+
+You'll want to make sure these load before the main script handling the form submission.
+
+```html
+<script src="https://wzrd.in/standalone/formdata-polyfill"></script>
+<script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
+<script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
+
+<script>
+  const scriptURL = '<SCRIPT URL>'
+  const form = document.forms['submit-to-google-sheet']
+  ...
+</script>
+```
+
 # Have feedback/requests/issues?
 Please [create a new issue](https://github.com/jamiewilson/form-to-google-sheet/issues). PRs are definitely welcome, but please run your ideas by me before putting in a lot of work. Thanks!
 
@@ -158,7 +178,7 @@ Please [create a new issue](https://github.com/jamiewilson/form-to-google-sheet/
 #### Documentation
 - [Google Apps Script](https://developers.google.com/apps-script/)
 - [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-- [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill)
-- [Fetch Polyfill](https://github.com/github/fetch)
+- [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 - [HTML `<form>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form)
 - [Document.forms](https://developer.mozilla.org/en-US/docs/Web/API/Document/forms)
+- [Sending forms through JavaScript](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Sending_forms_through_JavaScript)
