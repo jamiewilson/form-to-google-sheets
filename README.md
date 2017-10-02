@@ -149,9 +149,9 @@ Some of this stuff is not yet fully supported by browsers or doesn't work on old
 - [Fetch Polyfill](https://github.com/github/fetch)
 - [FormData Polyfill](https://github.com/jimmywarting/FormData)
 
-Since the FormData polyfill is published as a Node package and not in a way in which browsers can work, a good option for including these is using [Browserify's CDN called wzrd.in](https://wzrd.in/). This service compiles, minifies and serves it for us.
+Since the FormData polyfill is published as a Node package and needs to be compiled for browsers to work with, a good option for including these is using [Browserify's CDN called wzrd.in](https://wzrd.in/). This service compiles, minifies and serves the latest version of these scripts for us.
 
-You'll want to make sure these load before the main script handling the form submission.
+You'll want to make sure these load before the main script handling the form submission. e.g.:
 
 ```html
 <script src="https://wzrd.in/standalone/formdata-polyfill"></script>
