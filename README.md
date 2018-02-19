@@ -68,7 +68,7 @@ function doPost (e) {
 
 ## 3. Run the setup function
 
-- Next, go to `Run > Run Function > doPost` to run this function.
+- Next, go to `Run > Run Function > initialSetup` to run this function.
 - In the `Authorization Required` dialog, click on `Review Permissions`.
 - Sign in or pick the Google account associated with this projects.
 - You should see a dialog that says `Hi {Your Name}`, `Submit Form to Google Sheets wants to`...
