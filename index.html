@@ -1,5 +1,5 @@
-<form name="submit-to-google-sheet">
-  <input name="email" type="email" placeholder="Email" required>
+<form name="submit-form-to-google-sheets">
+  <input name="Applicant Name" type="text" placeholder="Email" required>
   <button type="submit">Send</button>
 </form>
 
@@ -9,7 +9,7 @@
 
   form.addEventListener('submit', e => {
     e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+    fetch(https://script.google.com/macros/s/AKfycbxB3f9eku0SEkgtMWcxy8d0bak4P8uG4GGXdqxebPIC3wrgfBU/exec, { method: 'POST', body: new FormData(form)})
       .then(response => console.log('Success!', response))
       .catch(error => console.error('Error!', error.message))
   })
