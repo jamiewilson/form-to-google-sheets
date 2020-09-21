@@ -140,6 +140,8 @@ Then create new headers with the exact, case-sensitive `name` values:
 |---|:---------:|:-----:|:---------:|:--------:|:---:|
 | 1 | timestamp | email | firstName | lastName |     |
 
+> Note: If you are using checkboxes for your forms, then have unique `name` for every checkbox option and add these unique names to the sheet to collect all responses!
+
 ## 8. Related Polyfills
 Some of this stuff is not yet fully supported by browsers or doesn't work on older ones. Here are some polyfill options to use for better support.
 
