@@ -12,7 +12,7 @@
 |---|:---------:|:-----:|:-:|:---:|
 | 1 | timestamp | email |   |     |
 
-> To learn how to add additional input fields, [checkout section 7 below](#7-adding-additional-form-data).
+> To learn how to add additional input fields, [checkout section 6 below](#6-adding-additional-form-data).
 
 ## 2. Create a Google Apps Script
 
