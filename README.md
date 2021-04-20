@@ -74,14 +74,7 @@ function doPost (e) {
 - You should see a dialog that says `Hi {Your Name}`, `Submit Form to Google Sheets wants to`...
 - Click `Allow`
 
-## 4. Add a new project trigger 
-- Click on `Edit > Current project’s triggers`. 
-- In the dialog click `No triggers set up. Click here to add one now.` 
-- In the dropdowns select `doPost`
-- Set the events fields to `From spreadsheet` and `On form submit`
-- Then click `Save`
-
-## 5. Publish the project as a web app
+## 4. Publish the project as a web app
 
 - Click on `Publish > Deploy as web app…`.
 - Set `Project Version` to `New` and put `initial version` in the input field below.
@@ -93,7 +86,7 @@ function doPost (e) {
 
 > **IMPORTANT!** If you have a custom domain with Gmail, you _might_ need to click `OK`, refresh the page, and then go to `Publish > Deploy as web app…` again to get the proper web app URL. It should look something like `https://script.google.com/a/yourdomain.com/macros/s/XXXX…`.
 
-## 6. Input your web app URL
+## 5. Input your web app URL
 
 Open the file named `index.html`. On line 12 replace `<SCRIPT URL>` with your script url:
 
@@ -110,6 +103,7 @@ Open the file named `index.html`. On line 12 replace `<SCRIPT URL>` with your sc
   form.addEventListener('submit', e => {
     e.preventDefault()
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => response.json())
       .then(response => console.log('Success!', response))
       .catch(error => console.error('Error!', error.message))
   })
@@ -122,7 +116,7 @@ Because Fetch and FormData aren't fully supported, you'll likely want to include
 
 > **Fun fact!** The `<html>`, `<head>`, and `body` tags are actually among a handful of optional tags, but since the [rules around how the browser parses a page are kinda complicated](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#optional-tags), you'd probably not want to omit them on real websites.
 
-## 7. Adding additional form data
+## 6. Adding additional form data
 To capture additional data, you'll just need to create new columns with titles matching exactly the `name` values from your form inputs. For example, if you want to add first and last name inputs, you'd give them `name` values like so:
 
 ```html
@@ -140,7 +134,7 @@ Then create new headers with the exact, case-sensitive `name` values:
 |---|:---------:|:-----:|:---------:|:--------:|:---:|
 | 1 | timestamp | email | firstName | lastName |     |
 
-## 8. Related Polyfills
+## 7. Related Polyfills
 Some of this stuff is not yet fully supported by browsers or doesn't work on older ones. Here are some polyfill options to use for better support.
 
 - [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill)
