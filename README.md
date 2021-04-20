@@ -112,7 +112,7 @@ Open the file named `index.html`. On line 12 replace `<SCRIPT URL>` with your sc
 
 As you can see, this script uses the the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), a fairly new promise-based mechanism for making web requests. It makes a "POST" request to your script URL and uses [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) to pass in our data as URL paramters.
 
-Because Fetch and FormData aren't fully supported, you'll likely want to include their respective polyfills. [See section #8](#8-related-polyfills). 
+Because Fetch and FormData aren't fully supported, you'll likely want to include their respective polyfills. [See section #7](#7-related-polyfills). 
 
 > **Fun fact!** The `<html>`, `<head>`, and `body` tags are actually among a handful of optional tags, but since the [rules around how the browser parses a page are kinda complicated](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#optional-tags), you'd probably not want to omit them on real websites.
 
