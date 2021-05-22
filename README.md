@@ -83,8 +83,9 @@ function doPost (e) {
 
 ## 5. Publish the project as a web app
 
-- Click on `Publish > Deploy as web app…`.
-- Set `Project Version` to `New` and put `initial version` in the input field below.
+- Click on `Deploy > New deployment`.
+- Click gear icon and choose web app.
+- Fill `New description` whatever, it doesn't matter.
 - Leave `Execute the app as:` set to `Me(your@address.com)`.
 - For `Who has access to the app:` select `Anyone, even anonymous`.
 - Click `Deploy`.
