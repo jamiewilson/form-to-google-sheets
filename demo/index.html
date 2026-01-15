@@ -12,11 +12,11 @@
 	</head>
 	<body>
 		<div class="form-container">
-			<div class="warning">
-				<strong>Warning:</strong>
-				Submissions will be publicly viewable in the Google Sheet linked below.
-			</div>
 			<form name="submit-to-google-sheet">
+				<div class="warning">
+					<strong>Warning:</strong>
+					Submissions will be publicly viewable in the Google Sheet linked below.
+				</div>
 				<div>
 					<input name="email" type="email" placeholder="Email" autocomplete="email" required />
 				</div>
@@ -79,7 +79,7 @@
 				setTimeout(() => {
 					successMessage.classList.remove('is-hidden')
 					loading.classList.add('is-hidden')
-				}, 500)
+				}, 200)
 			}
 
 			function showErrorMessage(error) {
@@ -87,7 +87,7 @@
 				setTimeout(() => {
 					errorMessage.classList.remove('is-hidden')
 					loading.classList.add('is-hidden')
-				}, 500)
+				}, 200)
 			}
 		</script>
 	</body>
