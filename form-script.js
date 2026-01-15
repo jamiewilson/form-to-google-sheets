@@ -6,9 +6,9 @@ For a detailed explanation of this file, view 'form-script-commented.js'
 var sheetName = 'Sheet1'
 var scriptProp = PropertiesService.getScriptProperties()
 
-function sendEmailNotification(subject, body) {
-	var recipient = 'test@test.com'
-	var senderName = 'test'
+function sendNewSubmissionEmailNotification(subject, body) {
+	var recipient = 'INSERT_YOUR_EMAIL_HERE'
+	var senderName = 'INSERT_YOUR_NAME_HERE'
 
 	MailApp.sendEmail({
 		to: recipient,
@@ -40,19 +40,17 @@ function doPost(e) {
 
 		sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
 
-		// Send email notification
 		var emailSubject = 'New Form Submission'
 		var emailBody = 'A new form submission has been received.'
-		sendEmailNotification(emailSubject, emailBody)
+		sendNewSubmissionEmailNotification(emailSubject, emailBody)
 
 		return ContentService.createTextOutput(
 			JSON.stringify({ result: 'success', row: nextRow }),
 		).setMimeType(ContentService.MimeType.JSON)
 	} catch (e) {
-		// Send error email notification
 		var errorSubject = 'Error in Form Submission'
 		var errorBody = 'An error occurred while processing the form submission:\n' + e
-		sendEmailNotification(errorSubject, errorBody)
+		sendNewSubmissionEmailNotification(errorSubject, errorBody)
 
 		return ContentService.createTextOutput(
 			JSON.stringify({ result: 'error', error: e }),
