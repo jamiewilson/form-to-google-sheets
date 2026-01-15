@@ -6,7 +6,7 @@ For a detailed explanation of this file, view 'form-script-commented.js'
 var sheetName = 'Sheet1'
 var scriptProp = PropertiesService.getScriptProperties()
 
-function intialSetup () {
+function initialSetup () {
   var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
   scriptProp.setProperty('key', activeSpreadsheet.getId())
 }
