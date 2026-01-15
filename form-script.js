@@ -40,10 +40,20 @@ function doPost(e) {
 
 		sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
 
+		// Send email notification
+		var emailSubject = 'New Form Submission'
+		var emailBody = 'A new form submission has been received.'
+		sendEmailNotification(emailSubject, emailBody)
+
 		return ContentService.createTextOutput(
 			JSON.stringify({ result: 'success', row: nextRow }),
 		).setMimeType(ContentService.MimeType.JSON)
 	} catch (e) {
+		// Send error email notification
+		var errorSubject = 'Error in Form Submission'
+		var errorBody = 'An error occurred while processing the form submission:\n' + e
+		sendEmailNotification(errorSubject, errorBody)
+
 		return ContentService.createTextOutput(
 			JSON.stringify({ result: 'error', error: e }),
 		).setMimeType(ContentService.MimeType.JSON)
