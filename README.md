@@ -18,12 +18,27 @@
 
 - Click on `Extensions > Apps Script` which should open a new tab.
 - Rename it to whatever you want. _Make sure to wait for it to actually save and update the title before editing the script._
-- Now, delete the `function myFunction() {}` block within the `Code.gs` tab.
+- Now, delete the `function myFunction() {}` block within the `Code.gs` tab if it exists.
+
+> IMPORTANT: If you want to receive email notifications on new submissions, make sure to replace the placeholder values below with your actual email and name.
+
 - Paste the following script in it's place and `File > Save`:
 
 ```js
 var sheetName = 'Sheet1'
 var scriptProp = PropertiesService.getScriptProperties()
+
+function sendNewSubmissionEmailNotification(subject, body) {
+	var recipient = 'INSERT_YOUR_EMAIL_HERE'
+	var senderName = 'INSERT_YOUR_NAME_HERE'
+
+	MailApp.sendEmail({
+		to: recipient,
+		subject: subject,
+		htmlBody: body,
+		name: senderName,
+	})
+}
 
 function initialSetup() {
 	var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
@@ -47,10 +62,18 @@ function doPost(e) {
 
 		sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
 
+		var emailSubject = 'New Form Submission'
+		var emailBody = 'A new form submission has been received.'
+		sendNewSubmissionEmailNotification(emailSubject, emailBody)
+
 		return ContentService.createTextOutput(
 			JSON.stringify({ result: 'success', row: nextRow }),
 		).setMimeType(ContentService.MimeType.JSON)
 	} catch (e) {
+		var errorSubject = 'Error in Form Submission'
+		var errorBody = 'An error occurred while processing the form submission:\n' + e
+		sendNewSubmissionEmailNotification(errorSubject, errorBody)
+
 		return ContentService.createTextOutput(
 			JSON.stringify({ result: 'error', error: e }),
 		).setMimeType(ContentService.MimeType.JSON)
