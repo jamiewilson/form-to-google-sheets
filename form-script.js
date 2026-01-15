@@ -6,40 +6,48 @@ For a detailed explanation of this file, view 'form-script-commented.js'
 var sheetName = 'Sheet1'
 var scriptProp = PropertiesService.getScriptProperties()
 
-function initialSetup () {
-  var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
-  scriptProp.setProperty('key', activeSpreadsheet.getId())
+function sendEmailNotification(subject, body) {
+	var recipient = 'test@test.com'
+	var senderName = 'test'
+
+	MailApp.sendEmail({
+		to: recipient,
+		subject: subject,
+		htmlBody: body,
+		name: senderName,
+	})
 }
 
-function doPost (e) {
-  var lock = LockService.getScriptLock()
-  lock.tryLock(10000)
+function initialSetup() {
+	var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+	scriptProp.setProperty('key', activeSpreadsheet.getId())
+}
 
-  try {
-    var doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
-    var sheet = doc.getSheetByName(sheetName)
+function doPost(e) {
+	var lock = LockService.getScriptLock()
+	lock.tryLock(10000)
 
-    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
-    var nextRow = sheet.getLastRow() + 1
+	try {
+		var doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
+		var sheet = doc.getSheetByName(sheetName)
 
-    var newRow = headers.map(function(header) {
-      return header === 'timestamp' ? new Date() : e.parameter[header]
-    })
+		var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
+		var nextRow = sheet.getLastRow() + 1
 
-    sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
+		var newRow = headers.map(function (header) {
+			return header === 'timestamp' ? new Date() : e.parameter[header]
+		})
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'success', 'row': nextRow }))
-      .setMimeType(ContentService.MimeType.JSON)
-  }
+		sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
 
-  catch (e) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'error', 'error': e }))
-      .setMimeType(ContentService.MimeType.JSON)
-  }
-
-  finally {
-    lock.releaseLock()
-  }
+		return ContentService.createTextOutput(
+			JSON.stringify({ result: 'success', row: nextRow }),
+		).setMimeType(ContentService.MimeType.JSON)
+	} catch (e) {
+		return ContentService.createTextOutput(
+			JSON.stringify({ result: 'error', error: e }),
+		).setMimeType(ContentService.MimeType.JSON)
+	} finally {
+		lock.releaseLock()
+	}
 }
