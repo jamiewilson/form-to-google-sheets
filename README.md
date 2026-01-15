@@ -128,6 +128,8 @@ Then create new headers with the exact, case-sensitive `name` values:
 |---|:---------:|:-----:|:---------:|:--------:|:---:|
 | 1 | timestamp | email | firstName | lastName |     |
 
+> Note: If you are using checkboxes for your forms, then have unique `name` for every checkbox option and add these unique names to the sheet to collect all responses.
+
 # Have feedback/requests/issues?
 Please [create a new issue](https://github.com/jamiewilson/form-to-google-sheet/issues). PRs are definitely welcome, but please run your ideas by me before putting in a lot of work. Thanks!
 
