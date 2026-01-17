@@ -3,57 +3,79 @@ Paste this script into the 'Code.gs' tab in the Script Editor
 For a detailed explanation of this file, view 'form-script-commented.js'
 */
 
-var sheetName = 'Sheet1'
-var scriptProp = PropertiesService.getScriptProperties()
-
-function sendNewSubmissionEmailNotification(subject, body) {
-	var recipient = 'INSERT_YOUR_EMAIL_HERE'
-	var senderName = 'INSERT_YOUR_NAME_HERE'
-
-	MailApp.sendEmail({
-		to: recipient,
-		subject: subject,
-		htmlBody: body,
-		name: senderName,
-	})
-}
+const scriptProp = PropertiesService.getScriptProperties()
 
 function initialSetup() {
-	var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+	const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
 	scriptProp.setProperty('key', activeSpreadsheet.getId())
 }
 
+function sanitizeValue(value) {
+	if (typeof value !== 'string') return value
+	const triggers = ['=', '+', '-', '@']
+	if (triggers.some(t => value.startsWith(t))) {
+		return "'" + value
+	}
+	return value
+}
+
+// Uncomment and setup to get notified of new submissions
+
+//function sendNewSubmissionEmailNotification(subject, body) {
+//	const recipient = 'INSERT_YOUR_EMAIL_HERE'
+//	const senderName = 'INSERT_YOUR_NAME_HERE'
+
+//	MailApp.sendEmail({
+//		to: recipient,
+//		subject: subject,
+//		htmlBody: body,
+//		name: senderName,
+//	})
+//}
+
 function doPost(e) {
-	var lock = LockService.getScriptLock()
+	const lock = LockService.getScriptLock()
 	lock.tryLock(10000)
 
 	try {
-		var doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
-		var sheet = doc.getSheetByName(sheetName)
+		if (e.parameter.mobile_number && e.parameter.mobile_number !== '') {
+			return ContentService.createTextOutput(
+				JSON.stringify({ result: 'success', message: 'Bot detected' }),
+			).setMimeType(ContentService.MimeType.JSON)
+		}
 
-		var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
-		var nextRow = sheet.getLastRow() + 1
+		const sheetName = e.parameter.sheet_name || 'Sheet1'
+		const doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
+		const sheet = doc.getSheetByName(sheetName)
+		const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
+		const nextRow = sheet.getLastRow() + 1
 
-		var newRow = headers.map(function (header) {
-			return header === 'timestamp' ? new Date() : e.parameter[header]
+		const newRow = headers.map(function (header) {
+			if (header === 'id') return Utilities.getUuid()
+			if (header === 'timestamp') return new Date()
+
+			const rawValue = e.parameter[header] || ''
+			return sanitizeValue(rawValue)
 		})
 
-		sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
+		const newRange = sheet.getRange(nextRow, 1, 1, newRow.length)
+		newRange.setNumberFormat('@')
+		newRange.setValues([newRow])
 
-		var emailSubject = 'New Form Submission'
-		var emailBody = 'A new form submission has been received.'
-		sendNewSubmissionEmailNotification(emailSubject, emailBody)
+		//const emailSubject = 'New Form Submission'
+		//const emailBody = 'A new submission has been added to row ' + nextRow
+		//sendNewSubmissionEmailNotification(emailSubject, emailBody)
 
 		return ContentService.createTextOutput(
 			JSON.stringify({ result: 'success', row: nextRow }),
 		).setMimeType(ContentService.MimeType.JSON)
 	} catch (e) {
-		var errorSubject = 'Error in Form Submission'
-		var errorBody = 'An error occurred while processing the form submission:\n' + e
-		sendNewSubmissionEmailNotification(errorSubject, errorBody)
+		//const errorSubject = 'Error in Form Submission'
+		//const errorBody = 'Form submission error:\n' + e.toString()
+		//sendNewSubmissionEmailNotification(errorSubject, errorBody)
 
 		return ContentService.createTextOutput(
-			JSON.stringify({ result: 'error', error: e }),
+			JSON.stringify({ result: 'error', error: e.toString() }),
 		).setMimeType(ContentService.MimeType.JSON)
 	} finally {
 		lock.releaseLock()

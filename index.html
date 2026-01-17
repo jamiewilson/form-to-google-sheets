@@ -1,16 +1,18 @@
-<form name="submit-to-google-sheet">
-  <input name="email" type="email" placeholder="Email" required>
-  <button type="submit">Send</button>
+<form name="YOUR_FORM_NAME">
+	<input type="hidden" name="sheet_name" value="YOUR_SHEET_NAME" />
+	<input name="email" type="email" placeholder="Email" required />
+	<button type="submit">Send</button>
 </form>
 
 <script>
-  const scriptURL = 'SCRIPT_URL'
-  const form = document.forms['submit-to-google-sheet']
+	const scriptURL = 'YOUR_SCRIPT_URL'
+	const form = document.forms['YOUR_FORM_NAME']
 
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => console.log('Success!', response))
-      .catch(error => console.error('Error!', error.message))
-  })
+	form.addEventListener('submit', e => {
+		e.preventDefault()
+		fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+			.then(response => response.json())
+			.then(response => console.log('Success!', response))
+			.catch(error => console.error('Error!', error.message))
+	})
 </script>
