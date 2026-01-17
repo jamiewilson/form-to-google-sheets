@@ -37,7 +37,7 @@
 
 If you want to receive email notifications on new submissions, make sure to replace the placeholder values with your actual email and name.
 
-> [!TIP]  
+> [!NOTE]  
 > Thanks to @LandonMoss for the email notification feature
 
 - Uncomment this function to your `Code.gs` file:
