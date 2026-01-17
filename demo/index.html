@@ -7,12 +7,12 @@
 		<title>Form To Google Sheets Demo</title>
 		<meta name="description" content="Store HTML form submissions in Google Sheets" />
 		<link href="./favicon.png" rel="shortcut icon" />
-
 		<link rel="stylesheet" href="main.css" />
 	</head>
 	<body>
 		<div class="form-container">
-			<form name="submit-to-google-sheet">
+			<form name="demo_form">
+				<input type="hidden" name="sheet_name" value="DemoSheet" />
 				<div class="warning">
 					<strong>Warning:</strong>
 					Submissions will be publicly viewable in the Google Sheet linked below.
@@ -22,6 +22,12 @@
 				</div>
 				<input name="firstName" type="text" placeholder="First Name" />
 				<input name="lastName" type="text" placeholder="Last Name" />
+
+				<div class="form-helper">
+					<label>If you are human, leave this blank:</label>
+					<input type="text" name="mobile_number" />
+				</div>
+
 				<button type="submit">Subscribe</button>
 			</form>
 
@@ -55,8 +61,9 @@
 
 		<script>
 			const scriptURL =
-				'https://script.google.com/macros/s/AKfycbwfSlJzeYDTqNbehhCyfGkxrAuTKEvxfZgqfjHiTc6XyvH6HANCH5ns1wMBfu5Fyc2xeA/exec'
-			const form = document.forms['submit-to-google-sheet']
+				'https://script.google.com/macros/s/AKfycbwk4PdeZvB3D_EPC9pML-68sUJNtLdNdKrAEkcylXCAL017K6N1vfYGbZbnA419vPpG7g/exec'
+			const form = document.forms['demo_form']
+
 			const loading = document.querySelector('.js-loading')
 			const successMessage = document.querySelector('.js-success-message')
 			const errorMessage = document.querySelector('.js-error-message')
@@ -65,6 +72,7 @@
 				e.preventDefault()
 				showLoadingIndicator()
 				fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+					.then(response => response.json())
 					.then(response => showSuccessMessage(response))
 					.catch(error => showErrorMessage(error))
 			})
@@ -79,7 +87,7 @@
 				setTimeout(() => {
 					successMessage.classList.remove('is-hidden')
 					loading.classList.add('is-hidden')
-				}, 200)
+				}, 100)
 			}
 
 			function showErrorMessage(error) {
@@ -87,7 +95,7 @@
 				setTimeout(() => {
 					errorMessage.classList.remove('is-hidden')
 					loading.classList.add('is-hidden')
-				}, 200)
+				}, 100)
 			}
 		</script>
 	</body>

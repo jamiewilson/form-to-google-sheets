@@ -1,0 +1,17 @@
+<form name="YOUR_FORM_NAME">
+	<!-- Add a Honeypot field inside your <form> to catch bots -->
+	<!-- Important: Do not name it "honeypot." Give it a name that -->
+	<!-- a bot would find enticing, like `website_url` or `mobile_number` -->
+	<div class="form-helper">
+		<label>If you are human, leave this blank:</label>
+		<input type="text" name="mobile_number" />
+	</div>
+
+	<!-- Rest of your form fields go here -->
+</form>
+
+<style>
+	.form-helper {
+		display: none;
+	}
+</style>

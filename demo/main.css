@@ -77,6 +77,10 @@ input:focus {
 	}
 }
 
+.form-helper {
+	display: none;
+}
+
 button {
 	color: #fff;
 	cursor: pointer;
